@@ -43,10 +43,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 function validateLabel(props, propName, componentName) {
-  if (process.env.NODE_ENV !== 'production') {
-    if (!props.children && !props.label && !props.icon) {
-      return new Error('Required prop label or children or icon was not specified in ' + componentName + '.');
-    }
+  if (!props.children && !props.label && !props.icon) {
+    return new Error('Required prop label or children or icon was not specified in ' + componentName + '.');
   }
 }
 
@@ -96,12 +94,13 @@ var FlatButton = function (_Component) {
       var label = _props.label;
       var labelStyle = _props.labelStyle;
       var labelPosition = _props.labelPosition;
+      var linkButton = _props.linkButton;
       var primary = _props.primary;
       var rippleColor = _props.rippleColor;
       var secondary = _props.secondary;
       var style = _props.style;
 
-      var other = _objectWithoutProperties(_props, ['children', 'disabled', 'hoverColor', 'backgroundColor', 'icon', 'label', 'labelStyle', 'labelPosition', 'primary', 'rippleColor', 'secondary', 'style']);
+      var other = _objectWithoutProperties(_props, ['children', 'disabled', 'hoverColor', 'backgroundColor', 'icon', 'label', 'labelStyle', 'labelPosition', 'linkButton', 'primary', 'rippleColor', 'secondary', 'style']);
 
       var _context$muiTheme = this.context.muiTheme;
       var _context$muiTheme$but = _context$muiTheme.button;
@@ -150,7 +149,7 @@ var FlatButton = function (_Component) {
 
       if (icon) {
         iconCloned = _react2.default.cloneElement(icon, {
-          color: icon.props.color || mergedRootStyles.color,
+          color: mergedRootStyles.color,
           style: {
             verticalAlign: 'middle',
             marginLeft: label && labelPosition !== 'before' ? 12 : 0,
@@ -193,6 +192,7 @@ var FlatButton = function (_Component) {
           disabled: disabled,
           focusRippleColor: buttonRippleColor,
           focusRippleOpacity: 0.3,
+          linkButton: linkButton,
           onKeyboardFocus: this.handleKeyboardFocus,
           onMouseLeave: this.handleMouseLeave,
           onMouseEnter: this.handleMouseEnter,
@@ -234,7 +234,7 @@ FlatButton.propTypes = {
    */
   hoverColor: _react.PropTypes.string,
   /**
-   * The URL to link to when the button is clicked.
+   * URL to link to when button clicked if `linkButton` is set to true.
    */
   href: _react.PropTypes.string,
   /**
@@ -253,6 +253,10 @@ FlatButton.propTypes = {
    * Override the inline-styles of the button's label element.
    */
   labelStyle: _react.PropTypes.object,
+  /**
+   * Enables use of `href` property to provide a URL to link to if set to true.
+   */
+  linkButton: _react.PropTypes.bool,
   /**
    * Callback function fired when the element is focused or blurred by the keyboard.
    *

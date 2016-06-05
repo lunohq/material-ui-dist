@@ -80,12 +80,12 @@ var StepButton = function (_Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(StepButton)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
       hovered: false,
-      touched: false
+      touch: false
     }, _this.handleMouseEnter = function (event) {
       var onMouseEnter = _this.props.onMouseEnter;
       // Cancel hover styles for touch devices
 
-      if (!_this.state.touched) {
+      if (!_this.state.touch) {
         _this.setState({ hovered: true });
       }
       if (typeof onMouseEnter === 'function') {
@@ -101,9 +101,7 @@ var StepButton = function (_Component) {
     }, _this.handleTouchStart = function (event) {
       var onTouchStart = _this.props.onTouchStart;
 
-      if (!_this.state.touched) {
-        _this.setState({ touched: true });
-      }
+      _this.setState({ touch: true });
       if (typeof onTouchStart === 'function') {
         onTouchStart(event);
       }
@@ -119,15 +117,9 @@ var StepButton = function (_Component) {
       var completed = _props.completed;
       var disabled = _props.disabled;
       var icon = _props.icon;
-      var onMouseEnter = _props.onMouseEnter;
-      var // eslint-disable-line no-unused-vars
-      onMouseLeave = _props.onMouseLeave;
-      var // eslint-disable-line no-unused-vars
-      onTouchStart = _props.onTouchStart;
-      var // eslint-disable-line no-unused-vars
-      style = _props.style;
+      var style = _props.style;
 
-      var other = _objectWithoutProperties(_props, ['active', 'children', 'completed', 'disabled', 'icon', 'onMouseEnter', 'onMouseLeave', 'onTouchStart', 'style']);
+      var other = _objectWithoutProperties(_props, ['active', 'children', 'completed', 'disabled', 'icon', 'style']);
 
       var styles = getStyles(this.props, this.context, this.state);
 

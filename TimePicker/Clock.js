@@ -84,15 +84,15 @@ var Clock = function (_Component) {
         selectedTime: time
       });
 
+      var onChangeHours = _this.props.onChangeHours;
+
+
       if (finished) {
         setTimeout(function () {
           _this.setState({
             mode: 'minute'
           });
-
-          var onChangeHours = _this.props.onChangeHours;
-
-          if (onChangeHours) {
+          if (typeof onChangeHours === 'function') {
             onChangeHours(time);
           }
         }, 100);
@@ -106,7 +106,7 @@ var Clock = function (_Component) {
 
       var onChangeMinutes = _this.props.onChangeMinutes;
 
-      if (onChangeMinutes) {
+      if (typeof onChangeMinutes === 'function') {
         setTimeout(function () {
           onChangeMinutes(time);
         }, 0);
@@ -115,6 +115,13 @@ var Clock = function (_Component) {
   }
 
   _createClass(Clock, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      this.setState({
+        selectedTime: nextProps.initialTime || new Date()
+      });
+    }
+  }, {
     key: 'getAffix',
     value: function getAffix() {
       if (this.props.format !== 'ampm') return '';
@@ -136,20 +143,15 @@ var Clock = function (_Component) {
     value: function render() {
       var clock = null;
 
-      var _context$muiTheme = this.context.muiTheme;
-      var prepareStyles = _context$muiTheme.prepareStyles;
-      var timePicker = _context$muiTheme.timePicker;
+      var prepareStyles = this.context.muiTheme.prepareStyles;
 
 
       var styles = {
-        root: {
-          userSelect: 'none'
-        },
+        root: {},
         container: {
           height: 280,
           padding: 10,
-          position: 'relative',
-          boxSizing: 'content-box'
+          position: 'relative'
         },
         circle: {
           position: 'absolute',
@@ -157,7 +159,7 @@ var Clock = function (_Component) {
           width: 260,
           height: 260,
           borderRadius: '100%',
-          backgroundColor: timePicker.clockCircleColor
+          backgroundColor: this.context.muiTheme.timePicker.clockCircleColor
         }
       };
 
@@ -204,6 +206,8 @@ var Clock = function (_Component) {
 Clock.propTypes = {
   format: _react.PropTypes.oneOf(['ampm', '24hr']),
   initialTime: _react.PropTypes.object,
+  isActive: _react.PropTypes.bool,
+  mode: _react.PropTypes.oneOf(['hour', 'minute']),
   onChangeHours: _react.PropTypes.func,
   onChangeMinutes: _react.PropTypes.func
 };

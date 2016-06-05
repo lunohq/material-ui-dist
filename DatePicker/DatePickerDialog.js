@@ -87,10 +87,9 @@ var DatePickerDialog = function (_Component) {
         _this.props.onAccept(_this.refs.calendar.getSelectedDate());
       }
 
-      _this.setState({
-        open: false
-      });
-    }, _this.handleWindowKeyUp = function (event) {
+      _this.dismiss();
+    }, _this.handleKeyUp = function (event) {
+      // FIXME: Unused function
       switch ((0, _keycode2.default)(event)) {
         case 'enter':
           _this.handleTouchTapOk();
@@ -155,7 +154,7 @@ var DatePickerDialog = function (_Component) {
             style: styles.dialogBodyContent
           }),
           _react2.default.createElement(_reactEventListener2.default, {
-            target: 'window',
+            elementName: 'window',
             onKeyUp: this.handleWindowKeyUp
           }),
           _react2.default.createElement(_Calendar2.default, {

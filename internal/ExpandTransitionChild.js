@@ -52,7 +52,6 @@ var ExpandTransitionChild = function (_Component) {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       clearTimeout(this.enterTimer);
-      clearTimeout(this.enteredTimer);
       clearTimeout(this.leaveTimer);
     }
   }, {
@@ -62,84 +61,54 @@ var ExpandTransitionChild = function (_Component) {
       callback();
     }
   }, {
-    key: 'componentDidAppear',
-    value: function componentDidAppear() {
-      this.setAutoHeight();
-    }
-  }, {
     key: 'componentWillEnter',
     value: function componentWillEnter(callback) {
-      var _this2 = this;
-
-      var _props = this.props;
-      var enterDelay = _props.enterDelay;
-      var transitionDelay = _props.transitionDelay;
-      var transitionDuration = _props.transitionDuration;
+      var enterDelay = this.props.enterDelay;
 
       var _ReactDOM$findDOMNode = _reactDom2.default.findDOMNode(this);
 
       var style = _ReactDOM$findDOMNode.style;
 
       style.height = 0;
-      this.enterTimer = setTimeout(function () {
-        return _this2.open();
-      }, enterDelay);
-      this.enteredTimer = setTimeout(function () {
-        return callback();
-      }, enterDelay + transitionDelay + transitionDuration);
+
+      if (enterDelay) {
+        this.enterTimer = setTimeout(function () {
+          return callback();
+        }, 450);
+        return;
+      }
+
+      callback();
     }
   }, {
     key: 'componentDidEnter',
     value: function componentDidEnter() {
-      this.setAutoHeight();
+      this.open();
     }
   }, {
     key: 'componentWillLeave',
     value: function componentWillLeave(callback) {
-      var _props2 = this.props;
-      var transitionDelay = _props2.transitionDelay;
-      var transitionDuration = _props2.transitionDuration;
-
-      var _ReactDOM$findDOMNode2 = _reactDom2.default.findDOMNode(this);
-
-      var style = _ReactDOM$findDOMNode2.style;
-      // Set fixed height first for animated property value
-
-      style.height = this.refs.wrapper.clientHeight + 'px';
+      var style = _reactDom2.default.findDOMNode(this).style;
+      style.height = this.refs.wrapper.clientHeight;
       style.height = 0;
       this.leaveTimer = setTimeout(function () {
         return callback();
-      }, transitionDelay + transitionDuration);
-    }
-  }, {
-    key: 'setAutoHeight',
-    value: function setAutoHeight() {
-      var _ReactDOM$findDOMNode3 = _reactDom2.default.findDOMNode(this);
-
-      var style = _ReactDOM$findDOMNode3.style;
-
-      style.height = 'auto';
+      }, 450);
     }
   }, {
     key: 'open',
     value: function open() {
-      var _ReactDOM$findDOMNode4 = _reactDom2.default.findDOMNode(this);
-
-      var style = _ReactDOM$findDOMNode4.style;
-
+      var style = _reactDom2.default.findDOMNode(this).style;
       style.height = this.refs.wrapper.clientHeight + 'px';
     }
   }, {
     key: 'render',
     value: function render() {
-      var _props3 = this.props;
-      var children = _props3.children;
-      var style = _props3.style;
-      var transitionDelay = _props3.transitionDelay;
-      var // eslint-disable-line no-unused-vars
-      transitionDuration = _props3.transitionDuration;
+      var _props = this.props;
+      var children = _props.children;
+      var style = _props.style;
 
-      var other = _objectWithoutProperties(_props3, ['children', 'style', 'transitionDelay', 'transitionDuration']);
+      var other = _objectWithoutProperties(_props, ['children', 'style']);
 
       var prepareStyles = this.context.muiTheme.prepareStyles;
 
@@ -151,7 +120,7 @@ var ExpandTransitionChild = function (_Component) {
         top: 0,
         left: 0,
         overflow: 'hidden',
-        transition: _transitions2.default.easeOut(transitionDuration + 'ms', ['height'], transitionDelay + 'ms')
+        transition: _transitions2.default.easeOut(null, ['height', 'opacity'])
       }, style);
 
       return _react2.default.createElement(
@@ -172,14 +141,10 @@ var ExpandTransitionChild = function (_Component) {
 ExpandTransitionChild.propTypes = {
   children: _react.PropTypes.node,
   enterDelay: _react.PropTypes.number,
-  style: _react.PropTypes.object,
-  transitionDelay: _react.PropTypes.number,
-  transitionDuration: _react.PropTypes.number
+  style: _react.PropTypes.object
 };
 ExpandTransitionChild.defaultProps = {
-  enterDelay: 0,
-  transitionDelay: 0,
-  transitionDuration: 450
+  enterDelay: 0
 };
 ExpandTransitionChild.contextTypes = {
   muiTheme: _react.PropTypes.object.isRequired

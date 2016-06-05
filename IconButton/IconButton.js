@@ -237,10 +237,6 @@ IconButton.propTypes = {
    */
   disabled: _react.PropTypes.bool,
   /**
-   * The URL to link to when the button is clicked.
-   */
-  href: _react.PropTypes.string,
-  /**
    * The CSS class name of the icon. Used for setting the icon with a stylesheet.
    */
   iconClassName: _react.PropTypes.string,

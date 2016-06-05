@@ -266,7 +266,6 @@ var Calendar = function (_Component) {
       var styles = {
         root: {
           color: calendarTextColor,
-          userSelect: 'none',
           width: isLandscape ? 479 : 310
         },
         calendar: {
@@ -339,7 +338,7 @@ var Calendar = function (_Component) {
         _ClearFix2.default,
         { style: styles.root },
         _react2.default.createElement(_reactEventListener2.default, {
-          target: 'window',
+          elementName: 'window',
           onKeyDown: this.handleWindowKeyDown
         }),
         _react2.default.createElement(_DateDisplay2.default, {
@@ -399,7 +398,7 @@ var Calendar = function (_Component) {
             { style: yearContainerStyle },
             this.yearSelector()
           ),
-          okLabel && _react2.default.createElement(_CalendarActionButtons2.default, {
+          this.props.okLabel && this.props.okLabel && _react2.default.createElement(_CalendarActionButtons2.default, {
             autoOk: this.props.autoOk,
             cancelLabel: cancelLabel,
             okLabel: okLabel,

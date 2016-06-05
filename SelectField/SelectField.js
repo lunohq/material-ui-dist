@@ -24,10 +24,6 @@ var _DropDownMenu = require('../DropDownMenu');
 
 var _DropDownMenu2 = _interopRequireDefault(_DropDownMenu);
 
-var _deprecatedPropType = require('../utils/deprecatedPropType');
-
-var _deprecatedPropType2 = _interopRequireDefault(_deprecatedPropType);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
@@ -50,9 +46,6 @@ function getStyles(props) {
     },
     hideDropDownUnderline: {
       borderTop: 'none'
-    },
-    dropDownMenu: {
-      display: 'block'
     }
   };
 }
@@ -82,28 +75,25 @@ var SelectField = function (_Component) {
       var errorStyle = _props.errorStyle;
       var selectFieldRoot = _props.selectFieldRoot;
       var disabled = _props.disabled;
-      var floatingLabelFixed = _props.floatingLabelFixed;
       var floatingLabelText = _props.floatingLabelText;
       var floatingLabelStyle = _props.floatingLabelStyle;
       var hintStyle = _props.hintStyle;
       var hintText = _props.hintText;
       var fullWidth = _props.fullWidth;
       var errorText = _props.errorText;
-      var menuStyle = _props.menuStyle;
       var onFocus = _props.onFocus;
       var onBlur = _props.onBlur;
       var onChange = _props.onChange;
       var value = _props.value;
 
-      var other = _objectWithoutProperties(_props, ['autoWidth', 'children', 'style', 'labelStyle', 'iconStyle', 'id', 'underlineDisabledStyle', 'underlineFocusStyle', 'underlineStyle', 'errorStyle', 'selectFieldRoot', 'disabled', 'floatingLabelFixed', 'floatingLabelText', 'floatingLabelStyle', 'hintStyle', 'hintText', 'fullWidth', 'errorText', 'menuStyle', 'onFocus', 'onBlur', 'onChange', 'value']);
+      var other = _objectWithoutProperties(_props, ['autoWidth', 'children', 'style', 'labelStyle', 'iconStyle', 'id', 'underlineDisabledStyle', 'underlineFocusStyle', 'underlineStyle', 'errorStyle', 'selectFieldRoot', 'disabled', 'floatingLabelText', 'floatingLabelStyle', 'hintStyle', 'hintText', 'fullWidth', 'errorText', 'onFocus', 'onBlur', 'onChange', 'value']);
 
       var styles = getStyles(this.props, this.context);
 
       return _react2.default.createElement(
         _TextField2.default,
-        _extends({
+        {
           style: style,
-          floatingLabelFixed: floatingLabelFixed,
           floatingLabelText: floatingLabelText,
           floatingLabelStyle: floatingLabelStyle,
           hintStyle: hintStyle,
@@ -117,19 +107,19 @@ var SelectField = function (_Component) {
           id: id,
           underlineDisabledStyle: underlineDisabledStyle,
           underlineFocusStyle: underlineFocusStyle
-        }, other),
+        },
         _react2.default.createElement(
           _DropDownMenu2.default,
-          {
+          _extends({
             disabled: disabled,
-            style: (0, _simpleAssign2.default)(styles.dropDownMenu, selectFieldRoot, menuStyle),
+            style: selectFieldRoot,
             labelStyle: (0, _simpleAssign2.default)(styles.label, labelStyle),
             iconStyle: (0, _simpleAssign2.default)(styles.icon, iconStyle),
             underlineStyle: styles.hideDropDownUnderline,
             autoWidth: autoWidth,
             value: value,
             onChange: onChange
-          },
+          }, other),
           children
         )
       );
@@ -143,21 +133,22 @@ SelectField.propTypes = {
   /**
    * If true, the width will automatically be set according to the
    * items inside the menu.
-   * To control the width in CSS instead, leave this prop set to `false`.
+   * To control this width in css instead, leave this prop to `false`.
    */
   autoWidth: _react.PropTypes.bool,
   /**
-   * The `MenuItem` elements to populate the select field with.
-   * If the menu items have a `label` prop, that value will
-   * represent the selected menu item in the rendered select field.
+   * The `MenuItem` elements to populate the `Menu` with.
+   * If the MenuItems have the prop `label` that value will
+   * be used to render the representation of that
+   * item within the field.
    */
   children: _react.PropTypes.node,
   /**
-   * If true, the select field will be disabled.
+   * Disables the select field if set to true.
    */
   disabled: _react.PropTypes.bool,
   /**
-   * Override the inline-styles of the error element.
+   * The style object to use to override error styles.
    */
   errorStyle: _react.PropTypes.object,
   /**
@@ -165,23 +156,19 @@ SelectField.propTypes = {
    */
   errorText: _react.PropTypes.node,
   /**
-   * If true, the floating label will float even when no value is selected.
-   */
-  floatingLabelFixed: _react.PropTypes.bool,
-  /**
-   * Override the inline-styles of the floating label.
+   * The style object to use to override floating label styles.
    */
   floatingLabelStyle: _react.PropTypes.object,
   /**
-   * The content of the floating label.
+   * The content to use for the floating label element.
    */
   floatingLabelText: _react.PropTypes.node,
   /**
-   * If true, the select field will take up the full width of its container.
+   * If true, the field receives the property width 100%.
    */
   fullWidth: _react.PropTypes.bool,
   /**
-   * Override the inline-styles of the hint element.
+   * The style object to use to override hint styles.
    */
   hintStyle: _react.PropTypes.object,
   /**
@@ -189,7 +176,7 @@ SelectField.propTypes = {
    */
   hintText: _react.PropTypes.node,
   /**
-   * Override the inline-styles of the icon element.
+   * Overrides the styles of the icon element.
    */
   iconStyle: _react.PropTypes.object,
   /**
@@ -197,54 +184,40 @@ SelectField.propTypes = {
    */
   id: _react.PropTypes.string,
   /**
-   * Override the label style when the select field is inactive.
+   * Overrides the styles of label when the `SelectField` is inactive.
    */
   labelStyle: _react.PropTypes.object,
   /**
-   * Override the inline-styles of the underlying `DropDownMenu` element.
-   */
-  menuStyle: _react.PropTypes.object,
-  /**
-   * Callback function fired when the select field loses focus.
-   *
-   * @param {object} event `blur` event targeting the select field.
+   * Callback function that is fired when the `SelectField` loses focus.
    */
   onBlur: _react.PropTypes.func,
   /**
-   * Callback function fired when a menu item is selected.
-   *
-   * @param {object} event TouchTap event targeting the menu item
-   * that was selected.
-   * @param {number} key The index of the selected menu item.
-   * @param {any} payload The `value` prop of the selected menu item.
+   * Callback function that is fired when the value changes.
    */
   onChange: _react.PropTypes.func,
   /**
-   * Callback function fired when the select field gains focus.
-   *
-   * @param {object} event `focus` event targeting the select field.
+   * Callback function that is fired when the `SelectField` gains focus.
    */
   onFocus: _react.PropTypes.func,
   /**
-   * Override the inline-styles of the underlying `DropDownMenu` element.
+   * The style object to use to override the `DropDownMenu`.
    */
-  selectFieldRoot: (0, _deprecatedPropType2.default)(_react.PropTypes.object, 'Instead, use `menuStyle`.'),
+  selectFieldRoot: _react.PropTypes.object, // Must be changed!
+
   /**
    * Override the inline-styles of the root element.
    */
   style: _react.PropTypes.object,
   /**
-   * Override the inline-styles of the underline element when the select
-   * field is disabled.
+   * Override the inline-styles of the underline element when disabled.
    */
   underlineDisabledStyle: _react.PropTypes.object,
   /**
-   * Override the inline-styles of the underline element when the select field
-   * is focused.
+   * Override the inline-styles of the underline element when focused.
    */
   underlineFocusStyle: _react.PropTypes.object,
   /**
-   * Override the inline-styles of the underline element.
+   * Overrides the styles of the underline element.
    */
   underlineStyle: _react.PropTypes.object,
   /**
