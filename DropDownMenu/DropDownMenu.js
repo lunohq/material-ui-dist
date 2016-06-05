@@ -140,10 +140,12 @@ var DropDownMenu = function (_Component) {
         anchorEl: null
       });
     }, _this.handleItemTouchTap = function (event, child, index) {
-      _this.props.onChange(event, index, child.props.value);
-
       _this.setState({
         open: false
+      }, function () {
+        if (_this.props.onChange) {
+          _this.props.onChange(event, index, child.props.value);
+        }
       });
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }

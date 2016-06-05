@@ -133,15 +133,25 @@ var AutoComplete = function (_Component) {
 
       var index = parseInt(child.key, 10);
       var chosenRequest = dataSource[index];
-      var searchText = typeof chosenRequest === 'string' ? chosenRequest : chosenRequest.text;
+      var searchText = _this.chosenRequestText(chosenRequest);
+
+      _this.props.onNewRequest(chosenRequest, index);
 
       _this.timerTouchTapCloseId = setTimeout(function () {
+        _this.setState({
+          searchText: searchText
+        });
         _this.close();
         _this.timerTouchTapCloseId = null;
       }, _this.props.menuCloseDelay);
-
-      _this.setState({ searchText: searchText });
-      _this.props.onNewRequest(chosenRequest, index);
+    }, _this.chosenRequestText = function (chosenRequest) {
+      if (typeof _this.props.chosenRequestText === 'function') {
+        return _this.props.chosenRequestText(chosenRequest);
+      } else if (typeof chosenRequest === 'string') {
+        return chosenRequest;
+      } else {
+        return chosenRequest[_this.props.dataSourceConfig.text];
+      }
     }, _this.handleEscKeyDown = function () {
       _this.close();
     }, _this.handleKeyDown = function (event) {
@@ -284,6 +294,7 @@ var AutoComplete = function (_Component) {
       var errorStyle = _props.errorStyle;
       var floatingLabelText = _props.floatingLabelText;
       var hintText = _props.hintText;
+      var filter = _props.filter;
       var fullWidth = _props.fullWidth;
       var menuStyle = _props.menuStyle;
       var menuProps = _props.menuProps;
@@ -297,7 +308,7 @@ var AutoComplete = function (_Component) {
       maxSearchResults = _props.maxSearchResults;
       var dataSource = _props.dataSource;
 
-      var other = _objectWithoutProperties(_props, ['anchorOrigin', 'animated', 'style', 'errorStyle', 'floatingLabelText', 'hintText', 'fullWidth', 'menuStyle', 'menuProps', 'listStyle', 'targetOrigin', 'disableFocusRipple', 'triggerUpdateOnFocus', 'openOnFocus', 'maxSearchResults', 'dataSource']);
+      var other = _objectWithoutProperties(_props, ['anchorOrigin', 'animated', 'style', 'errorStyle', 'floatingLabelText', 'hintText', 'filter', 'fullWidth', 'menuStyle', 'menuProps', 'listStyle', 'targetOrigin', 'disableFocusRipple', 'triggerUpdateOnFocus', 'openOnFocus', 'maxSearchResults', 'dataSource']);
 
       var _state = this.state;
       var open = _state.open;
@@ -313,7 +324,7 @@ var AutoComplete = function (_Component) {
       dataSource.every(function (item, index) {
         switch (typeof item === 'undefined' ? 'undefined' : _typeof(item)) {
           case 'string':
-            if (_this2.props.filter(searchText, item, item)) {
+            if (filter(searchText, item, item)) {
               requestsList.push({
                 text: item,
                 value: _react2.default.createElement(_MenuItem2.default, {
@@ -328,27 +339,29 @@ var AutoComplete = function (_Component) {
             break;
 
           case 'object':
-            if (item && typeof item.text === 'string') {
-              if (_this2.props.filter(searchText, item.text, item)) {
-                if (item.value.type && (item.value.type.muiName === _MenuItem2.default.muiName || item.value.type.muiName === _Divider2.default.muiName)) {
-                  requestsList.push({
-                    text: item.text,
-                    value: _react2.default.cloneElement(item.value, {
-                      key: index,
-                      disableFocusRipple: _this2.props.disableFocusRipple
-                    })
-                  });
-                } else {
-                  requestsList.push({
-                    text: item.text,
-                    value: _react2.default.createElement(_MenuItem2.default, {
-                      innerDivStyle: styles.innerDiv,
-                      primaryText: item.value,
-                      disableFocusRipple: disableFocusRipple,
-                      key: index
-                    })
-                  });
-                }
+            if (item && typeof item[_this2.props.dataSourceConfig.text] === 'string') {
+              var itemText = item[_this2.props.dataSourceConfig.text];
+              if (!_this2.props.filter(searchText, itemText, item)) break;
+
+              var itemValue = item[_this2.props.dataSourceConfig.value];
+              if (itemValue.type && (itemValue.type.muiName === _MenuItem2.default.muiName || itemValue.type.muiName === _Divider2.default.muiName)) {
+                requestsList.push({
+                  text: itemText,
+                  value: _react2.default.cloneElement(itemValue, {
+                    key: index,
+                    disableFocusRipple: disableFocusRipple
+                  })
+                });
+              } else {
+                requestsList.push({
+                  text: itemText,
+                  value: _react2.default.createElement(_MenuItem2.default, {
+                    innerDivStyle: styles.innerDiv,
+                    primaryText: itemValue,
+                    disableFocusRipple: disableFocusRipple,
+                    key: index
+                  })
+                });
               }
             }
             break;
@@ -369,7 +382,7 @@ var AutoComplete = function (_Component) {
           autoWidth: false,
           disableAutoFocus: focusTextField,
           onEscKeyDown: this.handleEscKeyDown,
-          initiallyKeyboardFocused: false,
+          initiallyKeyboardFocused: true,
           onItemTouchTap: this.handleItemTouchTap,
           onMouseDown: this.handleMouseDown,
           style: (0, _simpleAssign2.default)(styles.menu, menuStyle),
@@ -432,6 +445,16 @@ AutoComplete.propTypes = {
    * Array of strings or nodes used to populate the list.
    */
   dataSource: _react.PropTypes.array.isRequired,
+  /**
+   * Config for objects list dataSource.
+   *
+   * @typedef {Object} dataSourceConfig
+   *
+   * @property {string} text `dataSource` element key used to find a string to be matched for search
+   * and shown as a `TextField` input value after choosing the result.
+   * @property {string} value `dataSource` element key used to find a string to be shown in search results.
+   */
+  dataSourceConfig: _react.PropTypes.object,
   /**
    * Disables focus ripple when true.
    */
@@ -518,6 +541,13 @@ AutoComplete.propTypes = {
    */
   onUpdateInput: _react.PropTypes.func,
   /**
+   * This function is called to retrieve the text from the `chosenRequest` and should return a string.
+   * By default, if the `chosenRequest` is a string, that will be used.
+   * Otherwise the key specified in `dataSourceConfig.text` will be returned
+   * for the `chosenRequest`.
+   */
+  chosenRequestText: _react.PropTypes.func,
+  /**
    * Auto complete menu is open if true.
    */
   open: _react.PropTypes.bool,
@@ -548,6 +578,10 @@ AutoComplete.defaultProps = {
     horizontal: 'left'
   },
   animated: true,
+  dataSourceConfig: {
+    text: 'text',
+    value: 'value'
+  },
   disableFocusRipple: true,
   filter: function filter(searchText, key) {
     return searchText !== '' && key.indexOf(searchText) !== -1;
@@ -613,14 +647,17 @@ AutoComplete.levenshteinDistanceFilter = function (distanceLessThan) {
 };
 
 AutoComplete.fuzzyFilter = function (searchText, key) {
-  if (searchText.length === 0) {
-    return false;
+  var compareString = key.toLowerCase();
+  searchText = searchText.toLowerCase();
+
+  var searchTextIndex = 0;
+  for (var index = 0; index < key.length; index++) {
+    if (compareString[index] === searchText[searchTextIndex]) {
+      searchTextIndex += 1;
+    }
   }
 
-  var subMatchKey = key.substring(0, searchText.length);
-  var distance = AutoComplete.levenshteinDistance(searchText.toLowerCase(), subMatchKey.toLowerCase());
-
-  return searchText.length > 3 ? distance < 2 : distance === 0;
+  return searchTextIndex === searchText.length;
 };
 
 AutoComplete.Item = _MenuItem2.default;

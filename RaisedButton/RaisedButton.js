@@ -43,8 +43,10 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 function validateLabel(props, propName, componentName) {
-  if (!props.children && !props.label && !props.icon) {
-    return new Error('Required prop label or children or icon was not specified in ' + componentName + '.');
+  if (process.env.NODE_ENV !== 'production') {
+    if (!props.children && !props.label && !props.icon) {
+      return new Error('Required prop label or children or icon was not specified in ' + componentName + '.');
+    }
   }
 }
 
@@ -112,7 +114,7 @@ function getStyles(props, context, state) {
     label: {
       position: 'relative',
       opacity: 1,
-      fontSize: '14px',
+      fontSize: raisedButton.fontSize,
       letterSpacing: 0,
       textTransform: raisedButton.textTransform || button.textTransform || 'uppercase',
       fontWeight: raisedButton.fontWeight,
@@ -280,7 +282,7 @@ var RaisedButton = function (_Component) {
       );
 
       var iconCloned = icon && _react2.default.cloneElement(icon, {
-        color: styles.label.color,
+        color: icon.props.color || styles.label.color,
         style: styles.icon
       });
 
@@ -367,8 +369,7 @@ RaisedButton.propTypes = {
    */
   fullWidth: _react.PropTypes.bool,
   /**
-   * If `linkButton` is true, the URL to link to when the button
-   * is clicked.
+   * The URL to link to when the button is clicked.
    */
   href: _react.PropTypes.string,
   /**
@@ -393,11 +394,6 @@ RaisedButton.propTypes = {
    * Override the inline-styles of the button's label element.
    */
   labelStyle: _react.PropTypes.object,
-  /**
-   * If true, enable the use of the `href` property to provide
-   * a URL to link to.
-   */
-  linkButton: _react.PropTypes.bool,
   /**
    * Callback function fired when a mouse button is pressed down on
    * the element.

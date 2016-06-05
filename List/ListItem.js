@@ -96,7 +96,7 @@ function getStyles(props, context, state) {
 
     // This inner div is needed so that ripples will span the entire container
     innerDiv: {
-      marginLeft: nestedLevel * muiTheme.listItem.nestedLevelDepth,
+      marginLeft: nestedLevel * listItem.nestedLevelDepth,
       paddingLeft: leftIcon || leftAvatar || leftCheckbox || insetChildren ? 72 : 16,
       paddingRight: rightIcon || rightAvatar || rightIconButton ? 56 : rightToggle ? 72 : 16,
       paddingBottom: singleAvatar ? 20 : 16,
@@ -259,8 +259,8 @@ var ListItem = function (_Component) {
 
   _createClass(ListItem, [{
     key: 'shouldComponentUpdate',
-    value: function shouldComponentUpdate(nextProps, nextState) {
-      return !(0, _shallowEqual2.default)(this.props, nextProps) || !(0, _shallowEqual2.default)(this.state, nextState);
+    value: function shouldComponentUpdate(nextProps, nextState, nextContext) {
+      return !(0, _shallowEqual2.default)(this.props, nextProps) || !(0, _shallowEqual2.default)(this.state, nextState) || !(0, _shallowEqual2.default)(this.context, nextContext);
     }
 
     // This method is needed by the `MenuItem` component.
@@ -481,10 +481,11 @@ var ListItem = function (_Component) {
         null,
         hasCheckbox ? this.createLabelElement(styles, contentChildren, other) : disabled ? this.createDisabledElement(styles, contentChildren, other) : _react2.default.createElement(
           _EnhancedButton2.default,
-          _extends({}, other, {
+          _extends({
+            containerElement: 'span'
+          }, other, {
             disabled: disabled,
             disableKeyboardFocus: disableKeyboardFocus || this.state.rightIconButtonKeyboardFocused,
-            linkButton: true,
             onKeyboardFocus: this.handleKeyboardFocus,
             onMouseLeave: this.handleMouseLeave,
             onMouseEnter: this.handleMouseEnter,

@@ -34,6 +34,10 @@ var _TouchRipple = require('./TouchRipple');
 
 var _TouchRipple2 = _interopRequireDefault(_TouchRipple);
 
+var _deprecatedPropType = require('../utils/deprecatedPropType');
+
+var _deprecatedPropType2 = _interopRequireDefault(_deprecatedPropType);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
@@ -86,6 +90,9 @@ var EnhancedButton = function (_Component) {
       if (!_this.props.disabled && !_this.props.disableKeyboardFocus) {
         if ((0, _keycode2.default)(event) === 'enter' && _this.state.isKeyboardFocused) {
           _this.handleTouchTap(event);
+        }
+        if ((0, _keycode2.default)(event) === 'esc' && _this.state.isKeyboardFocused) {
+          _this.removeKeyboardFocus(event);
         }
       }
       _this.props.onKeyDown(event);
@@ -147,6 +154,10 @@ var EnhancedButton = function (_Component) {
     value: function componentDidMount() {
       injectStyle();
       listenForTabPresses();
+      if (this.state.isKeyboardFocused) {
+        this.refs.enhancedButton.focus();
+        this.props.onKeyboardFocus(null, true);
+      }
     }
   }, {
     key: 'componentWillReceiveProps',
@@ -251,8 +262,10 @@ var EnhancedButton = function (_Component) {
       var // eslint-disable-line no-unused-vars
       focusRippleOpacity = _props3.focusRippleOpacity;
       var // eslint-disable-line no-unused-vars
-      linkButton = _props3.linkButton;
-      var touchRippleColor = _props3.touchRippleColor;
+      href = _props3.href;
+      var linkButton = _props3.linkButton;
+      var // eslint-disable-line no-unused-vars
+      touchRippleColor = _props3.touchRippleColor;
       var // eslint-disable-line no-unused-vars
       touchRippleOpacity = _props3.touchRippleOpacity;
       var // eslint-disable-line no-unused-vars
@@ -272,7 +285,7 @@ var EnhancedButton = function (_Component) {
       var tabIndex = _props3.tabIndex;
       var type = _props3.type;
 
-      var other = _objectWithoutProperties(_props3, ['centerRipple', 'children', 'containerElement', 'disabled', 'disableFocusRipple', 'disableKeyboardFocus', 'disableTouchRipple', 'focusRippleColor', 'focusRippleOpacity', 'linkButton', 'touchRippleColor', 'touchRippleOpacity', 'onBlur', 'onClick', 'onFocus', 'onKeyUp', 'onKeyDown', 'onTouchTap', 'style', 'tabIndex', 'type']);
+      var other = _objectWithoutProperties(_props3, ['centerRipple', 'children', 'containerElement', 'disabled', 'disableFocusRipple', 'disableKeyboardFocus', 'disableTouchRipple', 'focusRippleColor', 'focusRippleOpacity', 'href', 'linkButton', 'touchRippleColor', 'touchRippleOpacity', 'onBlur', 'onClick', 'onFocus', 'onKeyUp', 'onKeyDown', 'onTouchTap', 'style', 'tabIndex', 'type']);
 
       var _context$muiTheme = this.context.muiTheme;
       var prepareStyles = _context$muiTheme.prepareStyles;
@@ -287,6 +300,8 @@ var EnhancedButton = function (_Component) {
         WebkitTapHighlightColor: enhancedButton.tapHighlightColor, // Remove mobile color flashing (deprecated)
         cursor: disabled ? 'default' : 'pointer',
         textDecoration: 'none',
+        margin: 0,
+        padding: 0,
         outline: 'none',
         fontSize: 'inherit',
         fontWeight: 'inherit',
@@ -305,7 +320,7 @@ var EnhancedButton = function (_Component) {
         mergedStyles.background = 'none';
       }
 
-      if (disabled && linkButton) {
+      if (disabled && href) {
         return _react2.default.createElement(
           'span',
           _extends({}, other, {
@@ -317,7 +332,9 @@ var EnhancedButton = function (_Component) {
 
       var buttonProps = _extends({}, other, {
         style: prepareStyles(mergedStyles),
+        ref: 'enhancedButton',
         disabled: disabled,
+        href: href,
         onBlur: this.handleBlur,
         onClick: this.handleClick,
         onFocus: this.handleFocus,
@@ -329,10 +346,7 @@ var EnhancedButton = function (_Component) {
       });
       var buttonChildren = this.createButtonChildren();
 
-      // Provides backward compatibity. Added to support wrapping around <a> element.
-      var targetLinkElement = buttonProps.hasOwnProperty('href') ? 'a' : 'span';
-
-      return _react2.default.isValidElement(containerElement) ? _react2.default.cloneElement(containerElement, buttonProps, buttonChildren) : _react2.default.createElement(linkButton ? targetLinkElement : containerElement, buttonProps, buttonChildren);
+      return _react2.default.isValidElement(containerElement) ? _react2.default.cloneElement(containerElement, buttonProps, buttonChildren) : _react2.default.createElement(href ? 'a' : containerElement, buttonProps, buttonChildren);
     }
   }]);
 
@@ -349,14 +363,21 @@ EnhancedButton.propTypes = {
   disabled: _react.PropTypes.bool,
   focusRippleColor: _react.PropTypes.string,
   focusRippleOpacity: _react.PropTypes.number,
+  href: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.bool]),
   keyboardFocused: _react.PropTypes.bool,
-  linkButton: _react.PropTypes.bool,
+  linkButton: (0, _deprecatedPropType2.default)(_react.PropTypes.bool, 'LinkButton is no longer required when the `href` property is provided.'),
   onBlur: _react.PropTypes.func,
   onClick: _react.PropTypes.func,
   onFocus: _react.PropTypes.func,
   onKeyDown: _react.PropTypes.func,
   onKeyUp: _react.PropTypes.func,
   onKeyboardFocus: _react.PropTypes.func,
+  onMouseDown: _react.PropTypes.func,
+  onMouseEnter: _react.PropTypes.func,
+  onMouseLeave: _react.PropTypes.func,
+  onMouseUp: _react.PropTypes.func,
+  onTouchEnd: _react.PropTypes.func,
+  onTouchStart: _react.PropTypes.func,
   onTouchTap: _react.PropTypes.func,
   style: _react.PropTypes.object,
   tabIndex: _react.PropTypes.number,
@@ -369,9 +390,15 @@ EnhancedButton.defaultProps = {
   onBlur: function onBlur() {},
   onClick: function onClick() {},
   onFocus: function onFocus() {},
-  onKeyboardFocus: function onKeyboardFocus() {},
   onKeyDown: function onKeyDown() {},
   onKeyUp: function onKeyUp() {},
+  onKeyboardFocus: function onKeyboardFocus() {},
+  onMouseDown: function onMouseDown() {},
+  onMouseEnter: function onMouseEnter() {},
+  onMouseLeave: function onMouseLeave() {},
+  onMouseUp: function onMouseUp() {},
+  onTouchEnd: function onTouchEnd() {},
+  onTouchStart: function onTouchStart() {},
   onTouchTap: function onTouchTap() {},
   tabIndex: 0,
   type: 'button'
