@@ -80,10 +80,12 @@ function getStyles(props, context) {
       fill: checkbox.checkedColor
     },
     checkWhenDisabled: {
-      fill: checkbox.disabledColor
+      fill: checkbox.disabledColor,
+      cursor: 'not-allowed'
     },
     boxWhenDisabled: {
-      fill: props.checked ? 'transparent' : checkbox.disabledColor
+      fill: props.checked ? 'transparent' : checkbox.disabledColor,
+      cursor: 'not-allowed'
     },
     label: {
       color: props.disabled ? checkbox.labelDisabledColor : checkbox.labelColor

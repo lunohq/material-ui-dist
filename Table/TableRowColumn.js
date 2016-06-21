@@ -142,15 +142,9 @@ TableRowColumn.propTypes = {
    * If true, this column responds to hover events.
    */
   hoverable: _react.PropTypes.bool,
-  /**
-   * @ignore
-   * Callback function for click event.
-   */
+  /** @ignore */
   onClick: _react.PropTypes.func,
-  /**
-   * @ignore
-   * Callback function for hover event.
-   */
+  /** @ignore */
   onHover: _react.PropTypes.func,
   /**
    * @ignore

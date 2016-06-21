@@ -75,10 +75,12 @@ function getStyles(props, context) {
       transform: 'scale(1)'
     },
     targetWhenDisabled: {
-      fill: radioButton.disabledColor
+      fill: radioButton.disabledColor,
+      cursor: 'not-allowed'
     },
     fillWhenDisabled: {
-      fill: radioButton.disabledColor
+      fill: radioButton.disabledColor,
+      cursor: 'not-allowed'
     },
     label: {
       color: props.disabled ? radioButton.labelDisabledColor : radioButton.labelColor
@@ -243,7 +245,7 @@ RadioButton.propTypes = {
   /**
    * The value of the radio button.
    */
-  value: _react.PropTypes.string
+  value: _react.PropTypes.any
 };
 RadioButton.defaultProps = {
   checked: false,

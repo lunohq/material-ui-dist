@@ -175,23 +175,11 @@ StepButton.propTypes = {
    * The icon displayed by the step label.
    */
   icon: _react.PropTypes.oneOfType([_react.PropTypes.element, _react.PropTypes.string, _react.PropTypes.number]),
-  /**
-   * Callback function fired when the mouse enters the element.
-   *
-   * @param {object} event `mouseenter` event targeting the element.
-   */
+  /** @ignore */
   onMouseEnter: _react.PropTypes.func,
-  /**
-   * Callback function fired when the mouse leaves the element.
-   *
-   * @param {object} event `mouseleave` event targeting the element.
-   */
+  /** @ignore */
   onMouseLeave: _react.PropTypes.func,
-  /**
-   * Callback function fired when the element is touched.
-   *
-   * @param {object} event `touchstart` event targeting the element.
-   */
+  /** @ignore */
   onTouchStart: _react.PropTypes.func,
   /**
    * Override the inline-style of the root element.

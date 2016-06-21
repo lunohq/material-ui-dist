@@ -221,6 +221,7 @@ var DropDownMenu = function (_Component) {
     key: 'render',
     value: function render() {
       var _props = this.props;
+      var animated = _props.animated;
       var autoWidth = _props.autoWidth;
       var children = _props.children;
       var className = _props.className;
@@ -233,7 +234,7 @@ var DropDownMenu = function (_Component) {
       var underlineStyle = _props.underlineStyle;
       var value = _props.value;
 
-      var other = _objectWithoutProperties(_props, ['autoWidth', 'children', 'className', 'iconStyle', 'labelStyle', 'listStyle', 'maxHeight', 'menuStyle', 'style', 'underlineStyle', 'value']);
+      var other = _objectWithoutProperties(_props, ['animated', 'autoWidth', 'children', 'className', 'iconStyle', 'labelStyle', 'listStyle', 'maxHeight', 'menuStyle', 'style', 'underlineStyle', 'value']);
 
       var _state = this.state;
       var anchorEl = _state.anchorEl;
@@ -286,6 +287,7 @@ var DropDownMenu = function (_Component) {
             anchorEl: anchorEl,
             animation: _PopoverAnimationVertical2.default,
             open: open,
+            animated: animated,
             onRequestClose: this.handleRequestCloseMenu
           },
           _react2.default.createElement(
@@ -310,6 +312,11 @@ var DropDownMenu = function (_Component) {
 
 DropDownMenu.muiName = 'DropDownMenu';
 DropDownMenu.propTypes = {
+  /**
+   * If true, the popover will apply transitions when
+   * it gets added to the DOM.
+   */
+  animated: _react.PropTypes.bool,
   /**
    * The width will automatically be set according to the items inside the menu.
    * To control this width in css instead, set this prop to `false`.
@@ -375,6 +382,7 @@ DropDownMenu.propTypes = {
   value: _react.PropTypes.any
 };
 DropDownMenu.defaultProps = {
+  animated: true,
   autoWidth: true,
   disabled: false,
   openImmediately: false,

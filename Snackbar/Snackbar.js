@@ -195,7 +195,7 @@ var Snackbar = function (_Component) {
       var style = _props.style;
       var bodyStyle = _props.bodyStyle;
 
-      var others = _objectWithoutProperties(_props, ['onActionTouchTap', 'style', 'bodyStyle']);
+      var other = _objectWithoutProperties(_props, ['onActionTouchTap', 'style', 'bodyStyle']);
 
       var _state = this.state;
       var action = _state.action;
@@ -210,7 +210,7 @@ var Snackbar = function (_Component) {
         { onClickAway: open && this.componentClickAway },
         _react2.default.createElement(
           'div',
-          _extends({}, others, { style: prepareStyles((0, _simpleAssign2.default)(styles.root, style)) }),
+          _extends({}, other, { style: prepareStyles((0, _simpleAssign2.default)(styles.root, style)) }),
           _react2.default.createElement(_SnackbarBody2.default, {
             open: open,
             message: message,

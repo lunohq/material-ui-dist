@@ -436,7 +436,7 @@ EnhancedSwitch.propTypes = {
   switched: _react.PropTypes.bool.isRequired,
   thumbStyle: _react.PropTypes.object,
   trackStyle: _react.PropTypes.object,
-  value: _react.PropTypes.string
+  value: _react.PropTypes.any
 };
 EnhancedSwitch.contextTypes = {
   muiTheme: _react.PropTypes.object.isRequired

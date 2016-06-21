@@ -176,7 +176,8 @@ var DatePicker = function (_Component) {
       var container = _props.container;
       var defaultDate = _props.defaultDate;
       var // eslint-disable-line no-unused-vars
-      disableYearSelection = _props.disableYearSelection;
+      dialogContainerStyle = _props.dialogContainerStyle;
+      var disableYearSelection = _props.disableYearSelection;
       var firstDayOfWeek = _props.firstDayOfWeek;
       var locale = _props.locale;
       var maxDate = _props.maxDate;
@@ -194,7 +195,7 @@ var DatePicker = function (_Component) {
       var textFieldStyle = _props.textFieldStyle;
       var wordings = _props.wordings;
 
-      var other = _objectWithoutProperties(_props, ['DateTimeFormat', 'autoOk', 'cancelLabel', 'className', 'container', 'defaultDate', 'disableYearSelection', 'firstDayOfWeek', 'locale', 'maxDate', 'minDate', 'mode', 'okLabel', 'onDismiss', 'onFocus', 'onShow', 'onTouchTap', 'shouldDisableDate', 'style', 'textFieldStyle', 'wordings']);
+      var other = _objectWithoutProperties(_props, ['DateTimeFormat', 'autoOk', 'cancelLabel', 'className', 'container', 'defaultDate', 'dialogContainerStyle', 'disableYearSelection', 'firstDayOfWeek', 'locale', 'maxDate', 'minDate', 'mode', 'okLabel', 'onDismiss', 'onFocus', 'onShow', 'onTouchTap', 'shouldDisableDate', 'style', 'textFieldStyle', 'wordings']);
 
       var prepareStyles = this.context.muiTheme.prepareStyles;
 
@@ -215,6 +216,7 @@ var DatePicker = function (_Component) {
           autoOk: autoOk,
           cancelLabel: cancelLabel,
           container: container,
+          containerStyle: dialogContainerStyle,
           disableYearSelection: disableYearSelection,
           firstDayOfWeek: firstDayOfWeek,
           initialDate: this.state.dialogDate,
@@ -271,6 +273,10 @@ DatePicker.propTypes = {
    * prop with `value` taking precedence.
    */
   defaultDate: _react.PropTypes.object,
+  /**
+   * Override the inline-styles of DatePickerDialog's Container element.
+   */
+  dialogContainerStyle: _react.PropTypes.object,
   /**
    * Disables the year selection in the date picker.
    */
@@ -331,8 +337,6 @@ DatePicker.propTypes = {
   onDismiss: _react.PropTypes.func,
   /**
    * Callback function that is fired when the Date Picker's `TextField` gains focus.
-   *
-   * @param {object} event `focus` event targeting the `TextField`.
    */
   onFocus: _react.PropTypes.func,
   /**

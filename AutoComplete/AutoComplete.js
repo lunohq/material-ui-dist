@@ -508,21 +508,11 @@ AutoComplete.propTypes = {
    * Override style for menu.
    */
   menuStyle: _react.PropTypes.object,
-  /**
-   * Callback function that is fired when the `TextField` loses focus.
-   *
-   * @param {object} event `blur` event targeting the `TextField`.
-   */
+  /** @ignore */
   onBlur: _react.PropTypes.func,
-  /**
-   * Callback function that is fired when the `TextField` gains focus.
-   *
-   * @param {object} event `focus` event targeting the `TextField`.
-   */
+  /** @ignore */
   onFocus: _react.PropTypes.func,
-  /**
-   * Callback function that is fired when the `TextField` receives a keydown event.
-   */
+  /** @ignore */
   onKeyDown: _react.PropTypes.func,
   /**
    * Callback function that is fired when a list item is selected, or enter is pressed in the `TextField`.

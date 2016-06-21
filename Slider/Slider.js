@@ -496,7 +496,7 @@ var Slider = function (_Component) {
       var step = _props3.step;
       var style = _props3.style;
 
-      var others = _objectWithoutProperties(_props3, ['description', 'disabled', 'disableFocusRipple', 'error', 'max', 'min', 'name', 'required', 'step', 'style']);
+      var other = _objectWithoutProperties(_props3, ['description', 'disabled', 'disableFocusRipple', 'error', 'max', 'min', 'name', 'required', 'step', 'style']);
 
       var prepareStyles = this.context.muiTheme.prepareStyles;
 
@@ -541,7 +541,7 @@ var Slider = function (_Component) {
 
       return _react2.default.createElement(
         'div',
-        _extends({}, others, { style: prepareStyles((0, _simpleAssign2.default)({}, style)) }),
+        _extends({}, other, { style: prepareStyles((0, _simpleAssign2.default)({}, style)) }),
         _react2.default.createElement(
           'span',
           null,
@@ -633,9 +633,7 @@ Slider.propTypes = {
    * of an input element.
    */
   name: _react.PropTypes.string,
-  /**
-   * Callback function that is fired when the focus has left the slider.
-   */
+  /** @ignore */
   onBlur: _react.PropTypes.func,
   /**
    * Callback function that is fired when the user changes the slider's value.
@@ -649,9 +647,7 @@ Slider.propTypes = {
    * Callback function that is fried when the slide has stopped moving.
    */
   onDragStop: _react.PropTypes.func,
-  /**
-   * Callback fired when the user has focused on the slider.
-   */
+  /** @ignore */
   onFocus: _react.PropTypes.func,
   /**
    * Whether or not the slider is required in a form.

@@ -155,11 +155,12 @@ var TableBody = function (_Component) {
       if (!this.props.displayRowCheckbox) return null;
 
       var key = rowProps.rowNumber + '-cb';
+      var disabled = !this.props.selectable;
       var checkbox = _react2.default.createElement(_Checkbox2.default, {
         ref: 'rowSelectCB',
         name: key,
         value: 'selected',
-        disabled: !this.props.selectable,
+        disabled: disabled,
         checked: rowProps.selected
       });
 
@@ -168,7 +169,10 @@ var TableBody = function (_Component) {
         {
           key: key,
           columnNumber: 0,
-          style: { width: 24 }
+          style: {
+            width: 24,
+            cursor: disabled ? 'not-allowed' : 'inherit'
+          }
         },
         checkbox
       );

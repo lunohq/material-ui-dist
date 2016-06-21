@@ -312,7 +312,7 @@ var EnhancedButton = function (_Component) {
          * css-overflow-hidden-not-working-in-chrome-when-parent-has-border-radius-and-chil
          */
         transform: disableTouchRipple && disableFocusRipple ? null : 'translate3d(0, 0, 0)',
-        verticalAlign: other.hasOwnProperty('href') ? 'middle' : null
+        verticalAlign: href ? 'middle' : null
       }, style);
 
       // Passing both background:none & backgroundColor can break due to object iteration order
@@ -363,7 +363,7 @@ EnhancedButton.propTypes = {
   disabled: _react.PropTypes.bool,
   focusRippleColor: _react.PropTypes.string,
   focusRippleOpacity: _react.PropTypes.number,
-  href: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.bool]),
+  href: _react.PropTypes.string,
   keyboardFocused: _react.PropTypes.bool,
   linkButton: (0, _deprecatedPropType2.default)(_react.PropTypes.bool, 'LinkButton is no longer required when the `href` property is provided.'),
   onBlur: _react.PropTypes.func,

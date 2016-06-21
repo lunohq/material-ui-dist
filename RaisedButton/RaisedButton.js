@@ -96,11 +96,11 @@ function getStyles(props, context, state) {
   return {
     root: {
       display: 'inline-block',
-      transition: _transitions2.default.easeOut()
+      transition: _transitions2.default.easeOut(),
+      minWidth: fullWidth ? '100%' : button.minWidth
     },
     button: {
       position: 'relative',
-      minWidth: fullWidth ? '100%' : button.minWidth,
       height: buttonHeight,
       lineHeight: buttonHeight + 'px',
       width: '100%',
@@ -394,42 +394,17 @@ RaisedButton.propTypes = {
    * Override the inline-styles of the button's label element.
    */
   labelStyle: _react.PropTypes.object,
-  /**
-   * Callback function fired when a mouse button is pressed down on
-   * the element.
-   *
-   * @param {object} event `mousedown` event targeting the element.
-   */
+  /** @ignore */
   onMouseDown: _react.PropTypes.func,
-  /**
-   * Callback function fired when the mouse enters the element.
-   *
-   * @param {object} event `mouseenter` event targeting the element.
-   */
+  /** @ignore */
   onMouseEnter: _react.PropTypes.func,
-  /**
-   * Callback function fired when the mouse leaves the element.
-   *
-   * @param {object} event `mouseleave` event targeting the element.
-   */
+  /** @ignore */
   onMouseLeave: _react.PropTypes.func,
-  /**
-   * Callback function fired when a mouse button is released on the element.
-   *
-   * @param {object} event `mouseup` event targeting the element.
-   */
+  /** @ignore */
   onMouseUp: _react.PropTypes.func,
-  /**
-   * Callback function fired when a touch point is removed from the element.
-   *
-   * @param {object} event `touchend` event targeting the element.
-   */
+  /** @ignore */
   onTouchEnd: _react.PropTypes.func,
-  /**
-   * Callback function fired when the element is touched.
-   *
-   * @param {object} event `touchstart` event targeting the element.
-   */
+  /** @ignore */
   onTouchStart: _react.PropTypes.func,
   /**
    * If true, the button will use the theme's primary color.

@@ -101,8 +101,9 @@ var SelectField = function (_Component) {
 
       return _react2.default.createElement(
         _TextField2.default,
-        _extends({
+        _extends({}, other, {
           style: style,
+          disabled: disabled,
           floatingLabelFixed: floatingLabelFixed,
           floatingLabelText: floatingLabelText,
           floatingLabelStyle: floatingLabelStyle,
@@ -117,7 +118,7 @@ var SelectField = function (_Component) {
           id: id,
           underlineDisabledStyle: underlineDisabledStyle,
           underlineFocusStyle: underlineFocusStyle
-        }, other),
+        }),
         _react2.default.createElement(
           _DropDownMenu2.default,
           {
@@ -204,11 +205,7 @@ SelectField.propTypes = {
    * Override the inline-styles of the underlying `DropDownMenu` element.
    */
   menuStyle: _react.PropTypes.object,
-  /**
-   * Callback function fired when the select field loses focus.
-   *
-   * @param {object} event `blur` event targeting the select field.
-   */
+  /** @ignore */
   onBlur: _react.PropTypes.func,
   /**
    * Callback function fired when a menu item is selected.
@@ -219,11 +216,7 @@ SelectField.propTypes = {
    * @param {any} payload The `value` prop of the selected menu item.
    */
   onChange: _react.PropTypes.func,
-  /**
-   * Callback function fired when the select field gains focus.
-   *
-   * @param {object} event `focus` event targeting the select field.
-   */
+  /** @ignore */
   onFocus: _react.PropTypes.func,
   /**
    * Override the inline-styles of the underlying `DropDownMenu` element.

@@ -114,14 +114,10 @@ function getStyles(props, context, state) {
     },
 
     leftIcon: {
-      color: listItem.leftIconColor,
-      fill: listItem.leftIconColor,
       left: 4
     },
 
     rightIcon: {
-      color: listItem.rightIconColor,
-      fill: listItem.rightIconColor,
       right: 4
     },
 
@@ -402,11 +398,17 @@ var ListItem = function (_Component) {
       var contentChildren = [children];
 
       if (leftIcon) {
-        this.pushElement(contentChildren, leftIcon, (0, _simpleAssign2.default)({}, styles.icons, styles.leftIcon));
+        var additionalProps = {
+          color: leftIcon.props.color || this.context.muiTheme.listItem.leftIconColor
+        };
+        this.pushElement(contentChildren, leftIcon, (0, _simpleAssign2.default)({}, styles.icons, styles.leftIcon), additionalProps);
       }
 
       if (rightIcon) {
-        this.pushElement(contentChildren, rightIcon, (0, _simpleAssign2.default)({}, styles.icons, styles.rightIcon));
+        var _additionalProps = {
+          color: rightIcon.props.color || this.context.muiTheme.listItem.rightIconColor
+        };
+        this.pushElement(contentChildren, rightIcon, (0, _simpleAssign2.default)({}, styles.icons, styles.rightIcon), _additionalProps);
       }
 
       if (leftAvatar) {
@@ -577,17 +579,9 @@ ListItem.propTypes = {
    * @param {boolean} isKeyboardFocused If true, the `ListItem` is focused.
    */
   onKeyboardFocus: _react.PropTypes.func,
-  /**
-   * Callback function fired when the mouse enters the `ListItem`.
-   *
-   * @param {object} event `mouseenter` event targeting the `ListItem`.
-   */
+  /** @ignore */
   onMouseEnter: _react.PropTypes.func,
-  /**
-   * Callback function fired when the mouse leaves the `ListItem`.
-   *
-   * @param {object} event `mouseleave` event targeting the `ListItem`.
-   */
+  /** @ignore */
   onMouseLeave: _react.PropTypes.func,
   /**
    * Callbak function fired when the `ListItem` toggles its nested list.
@@ -595,17 +589,9 @@ ListItem.propTypes = {
    * @param {object} listItem The `ListItem`.
    */
   onNestedListToggle: _react.PropTypes.func,
-  /**
-   * Callback function fired when the `ListItem` is touched.
-   *
-   * @param {object} event `touchstart` event targeting the `ListItem`.
-   */
+  /** @ignore */
   onTouchStart: _react.PropTypes.func,
-  /**
-   * Callback function fired when the `ListItem` is touch-tapped.
-   *
-   * @param {object} event TouchTap event targeting the `ListItem`.
-   */
+  /** @ignore */
   onTouchTap: _react.PropTypes.func,
   /**
    * This is the block element that contains the primary text.

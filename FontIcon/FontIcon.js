@@ -119,17 +119,9 @@ FontIcon.propTypes = {
    * This is the icon color when the mouse hovers over the icon.
    */
   hoverColor: _react.PropTypes.string,
-  /**
-   * Callback function fired when the mouse enters the element.
-   *
-   * @param {object} event `mouseenter` event targeting the element.
-   */
+  /** @ignore */
   onMouseEnter: _react.PropTypes.func,
-  /**
-   * Callback function fired when the mouse leaves the element.
-   *
-   * @param {object} event `mouseleave` event targeting the element.
-   */
+  /** @ignore */
   onMouseLeave: _react.PropTypes.func,
   /**
    * Override the inline-styles of the root element.

@@ -86,6 +86,7 @@ var getStyles = function getStyles(_ref, _ref2) {
   if (disabled) {
     styles.icon.color = inactiveIconColor;
     styles.root.color = disabledTextColor;
+    styles.root.cursor = 'not-allowed';
   }
 
   return styles;

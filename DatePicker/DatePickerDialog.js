@@ -8,6 +8,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _simpleAssign = require('simple-assign');
+
+var _simpleAssign2 = _interopRequireDefault(_simpleAssign);
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -106,6 +110,7 @@ var DatePickerDialog = function (_Component) {
       var DateTimeFormat = _props.DateTimeFormat;
       var cancelLabel = _props.cancelLabel;
       var container = _props.container;
+      var containerStyle = _props.containerStyle;
       var disableYearSelection = _props.disableYearSelection;
       var initialDate = _props.initialDate;
       var firstDayOfWeek = _props.firstDayOfWeek;
@@ -121,7 +126,7 @@ var DatePickerDialog = function (_Component) {
       var // eslint-disable-line no-unused-vars
       wordings = _props.wordings;
 
-      var other = _objectWithoutProperties(_props, ['DateTimeFormat', 'cancelLabel', 'container', 'disableYearSelection', 'initialDate', 'firstDayOfWeek', 'locale', 'maxDate', 'minDate', 'mode', 'okLabel', 'onAccept', 'shouldDisableDate', 'style', 'wordings']);
+      var other = _objectWithoutProperties(_props, ['DateTimeFormat', 'cancelLabel', 'container', 'containerStyle', 'disableYearSelection', 'initialDate', 'firstDayOfWeek', 'locale', 'maxDate', 'minDate', 'mode', 'okLabel', 'onAccept', 'shouldDisableDate', 'style', 'wordings']);
 
       var open = this.state.open;
 
@@ -138,12 +143,13 @@ var DatePickerDialog = function (_Component) {
       };
 
       var Container = container === 'inline' ? _Popover2.default : _Dialog2.default;
+
       return _react2.default.createElement(
         'div',
         _extends({}, other, { ref: 'root' }),
         _react2.default.createElement(
           Container,
-          _extends({}, other, {
+          {
             anchorEl: this.refs.root // For Popover
             , animation: _PopoverAnimationVertical2.default // For Popover
             , bodyStyle: styles.dialogBodyContent,
@@ -152,8 +158,8 @@ var DatePickerDialog = function (_Component) {
             repositionOnUpdate: true,
             open: open,
             onRequestClose: this.handleRequestClose,
-            style: styles.dialogBodyContent
-          }),
+            style: (0, _simpleAssign2.default)(styles.dialogBodyContent, containerStyle)
+          },
           _react2.default.createElement(_reactEventListener2.default, {
             target: 'window',
             onKeyUp: this.handleWindowKeyUp
@@ -191,6 +197,7 @@ DatePickerDialog.propTypes = {
   autoOk: _react.PropTypes.bool,
   cancelLabel: _react.PropTypes.node,
   container: _react.PropTypes.oneOf(['dialog', 'inline']),
+  containerStyle: _react.PropTypes.object,
   disableYearSelection: _react.PropTypes.bool,
   firstDayOfWeek: _react.PropTypes.number,
   initialDate: _react.PropTypes.object,

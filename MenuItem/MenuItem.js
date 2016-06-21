@@ -63,6 +63,7 @@ function getStyles(props, context) {
   var styles = {
     root: {
       color: props.disabled ? disabledColor : textColor,
+      cursor: props.disabled ? 'not-allowed' : 'inherit',
       lineHeight: props.desktop ? '32px' : '48px',
       fontSize: props.desktop ? 15 : 16,
       whiteSpace: 'nowrap'
@@ -209,8 +210,8 @@ var MenuItem = function (_Component) {
 
       // Left Icon
       var leftIconElement = leftIcon ? leftIcon : checked ? _react2.default.createElement(_check2.default, null) : null;
-      if (leftIconElement && desktop) {
-        var mergedLeftIconStyles = (0, _simpleAssign2.default)(styles.leftIconDesktop, leftIconElement.props.style);
+      if (leftIconElement) {
+        var mergedLeftIconStyles = desktop ? (0, _simpleAssign2.default)(styles.leftIconDesktop, leftIconElement.props.style) : leftIconElement.props.style;
         leftIconElement = _react2.default.cloneElement(leftIconElement, { style: mergedLeftIconStyles });
       }
 

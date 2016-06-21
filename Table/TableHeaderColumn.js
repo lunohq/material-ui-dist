@@ -141,10 +141,7 @@ TableHeaderColumn.propTypes = {
    * is automatically populated when used with TableHeader.
    */
   columnNumber: _react.PropTypes.number,
-  /**
-   * @ignore
-   * Callback function for click event.
-   */
+  /** @ignore */
   onClick: _react.PropTypes.func,
   /**
    * Override the inline-styles of the root element.

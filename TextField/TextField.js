@@ -102,7 +102,8 @@ var getStyles = function getStyles(props, context, state) {
       transition: _transitions2.default.easeOut()
     },
     floatingLabel: {
-      color: hintColor
+      color: hintColor,
+      pointerEvents: 'none'
     },
     input: {
       WebkitTapHighlightColor: 'rgba(0,0,0,0)', // Remove mobile color flashing (deprecated)
@@ -114,6 +115,7 @@ var getStyles = function getStyles(props, context, state) {
       outline: 'none',
       backgroundColor: 'rgba(0,0,0,0)',
       color: props.disabled ? disabledTextColor : textColor,
+      cursor: props.disabled ? 'not-allowed' : 'initial',
       font: 'inherit'
     },
     textarea: {}
@@ -295,6 +297,7 @@ var TextField = function (_Component) {
       var _this2 = this;
 
       var _props2 = this.props;
+      var children = _props2.children;
       var className = _props2.className;
       var disabled = _props2.disabled;
       var errorStyle = _props2.errorStyle;
@@ -325,7 +328,7 @@ var TextField = function (_Component) {
       var rowsMax = _props2.rowsMax;
       var textareaStyle = _props2.textareaStyle;
 
-      var other = _objectWithoutProperties(_props2, ['className', 'disabled', 'errorStyle', 'errorText', 'floatingLabelFixed', 'floatingLabelText', 'fullWidth', 'hintText', 'hintStyle', 'id', 'inputStyle', 'multiLine', 'onBlur', 'onChange', 'onFocus', 'style', 'type', 'underlineDisabledStyle', 'underlineFocusStyle', 'underlineShow', 'underlineStyle', 'rows', 'rowsMax', 'textareaStyle']);
+      var other = _objectWithoutProperties(_props2, ['children', 'className', 'disabled', 'errorStyle', 'errorText', 'floatingLabelFixed', 'floatingLabelText', 'fullWidth', 'hintText', 'hintStyle', 'id', 'inputStyle', 'multiLine', 'onBlur', 'onChange', 'onFocus', 'style', 'type', 'underlineDisabledStyle', 'underlineFocusStyle', 'underlineShow', 'underlineStyle', 'rows', 'rowsMax', 'textareaStyle']);
 
       var prepareStyles = this.context.muiTheme.prepareStyles;
 
@@ -366,9 +369,9 @@ var TextField = function (_Component) {
       var inputStyleMerged = (0, _simpleAssign2.default)(styles.input, inputStyle);
 
       var inputElement = void 0;
-      if (this.props.children) {
-        inputElement = _react2.default.cloneElement(this.props.children, _extends({}, inputProps, this.props.children.props, {
-          style: (0, _simpleAssign2.default)(inputStyleMerged, this.props.children.props.style)
+      if (children) {
+        inputElement = _react2.default.cloneElement(children, _extends({}, inputProps, children.props, {
+          style: (0, _simpleAssign2.default)(inputStyleMerged, children.props.style)
         }));
       } else {
         inputElement = multiLine ? _react2.default.createElement(_EnhancedTextarea2.default, _extends({}, other, inputProps, {
@@ -383,9 +386,18 @@ var TextField = function (_Component) {
         }));
       }
 
+      var rootProps = {};
+
+      if (children) {
+        rootProps = other;
+      }
+
       return _react2.default.createElement(
         'div',
-        { className: className, style: prepareStyles((0, _simpleAssign2.default)(styles.root, style)) },
+        _extends({}, rootProps, {
+          className: className,
+          style: prepareStyles((0, _simpleAssign2.default)(styles.root, style))
+        }),
         floatingLabelTextElement,
         hintText ? _react2.default.createElement(_TextFieldHint2.default, {
           muiTheme: this.context.muiTheme,
@@ -481,9 +493,7 @@ TextField.propTypes = {
    * Name applied to the input.
    */
   name: _react.PropTypes.string,
-  /**
-   * Callback function that is fired when the textfield loses focus.
-   */
+  /** @ignore */
   onBlur: _react.PropTypes.func,
   /**
    * Callback function that is fired when the textfield's value changes.
@@ -493,13 +503,9 @@ TextField.propTypes = {
    * The function to call when the user presses the Enter key.
    */
   onEnterKeyDown: (0, _deprecatedPropType2.default)(_react.PropTypes.func, 'Use onKeyDown and check for keycode instead.'),
-  /**
-   * Callback function that is fired when the textfield gains focus.
-   */
+  /** @ignore */
   onFocus: _react.PropTypes.func,
-  /**
-   * Callback function fired when key is pressed down.
-   */
+  /** @ignore */
   onKeyDown: _react.PropTypes.func,
   /**
    * Number of rows to display when multiLine option is set to true.

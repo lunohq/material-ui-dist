@@ -66,10 +66,6 @@ function getStyles(props, context) {
     tooltip: {
       boxSizing: 'border-box'
     },
-    icon: {
-      color: baseTheme.palette.textColor,
-      fill: baseTheme.palette.textColor
-    },
     overlay: {
       position: 'relative',
       top: 0,
@@ -79,7 +75,8 @@ function getStyles(props, context) {
     },
     disabled: {
       color: baseTheme.palette.disabledColor,
-      fill: baseTheme.palette.disabledColor
+      fill: baseTheme.palette.disabledColor,
+      cursor: 'not-allowed'
     }
   };
 }
@@ -151,12 +148,13 @@ var IconButton = function (_Component) {
       var _props = this.props;
       var disabled = _props.disabled;
       var disableTouchRipple = _props.disableTouchRipple;
+      var children = _props.children;
       var iconClassName = _props.iconClassName;
       var tooltip = _props.tooltip;
       var touch = _props.touch;
       var iconStyle = _props.iconStyle;
 
-      var other = _objectWithoutProperties(_props, ['disabled', 'disableTouchRipple', 'iconClassName', 'tooltip', 'touch', 'iconStyle']);
+      var other = _objectWithoutProperties(_props, ['disabled', 'disableTouchRipple', 'children', 'iconClassName', 'tooltip', 'touch', 'iconStyle']);
 
       var fonticon = void 0;
 
@@ -183,9 +181,10 @@ var IconButton = function (_Component) {
           {
             className: iconClassName,
             hoverColor: disabled ? null : iconHoverColor,
-            style: (0, _simpleAssign2.default)(styles.icon, disabled && styles.disabled, iconStyleFontIcon)
+            style: (0, _simpleAssign2.default)({}, disabled && styles.disabled, iconStyleFontIcon),
+            color: this.context.muiTheme.baseTheme.palette.textColor
           },
-          this.props.children
+          children
         );
       }
 
@@ -208,7 +207,7 @@ var IconButton = function (_Component) {
         }),
         tooltipElement,
         fonticon,
-        (0, _childUtils.extendChildren)(this.props.children, {
+        (0, _childUtils.extendChildren)(children, {
           style: childrenStyle
         })
       );
@@ -248,15 +247,9 @@ IconButton.propTypes = {
    * Override the inline-styles of the icon element.
    */
   iconStyle: _react.PropTypes.object,
-  /**
-   * Callback function fired when the element loses focus.
-   * @param {object} event `blur` event targeting the element.
-   */
+  /** @ignore */
   onBlur: _react.PropTypes.func,
-  /**
-   * Callback function fired when the element gains focus.
-   * @param {object} event `focus` event targeting the element.
-   */
+  /** @ignore */
   onFocus: _react.PropTypes.func,
   /**
    * Callback function fired when the element is focused or blurred by the keyboard.
@@ -265,24 +258,11 @@ IconButton.propTypes = {
    * @param {boolean} keyboardFocused Indicates whether the element is focused.
    */
   onKeyboardFocus: _react.PropTypes.func,
-  /**
-   * Callback function fired when the mouse enters the element.
-   *
-   * @param {object} event `mouseenter` event targeting the element.
-   */
+  /** @ignore */
   onMouseEnter: _react.PropTypes.func,
-  /**
-   * Callback function fired when the mouse leaves the element.
-   *
-   * @param {object} event `mouseleave` event targeting the element.
-   */
+  /** @ignore */
   onMouseLeave: _react.PropTypes.func,
-  /**
-   * Callback function fired when the mouse leaves the element. Unlike `onMouseLeave`,
-   * this callback will fire on disabled icon buttons.
-   *
-   * @param {object} event `mouseout` event targeting the element.
-   */
+  /** @ignore */
   onMouseOut: _react.PropTypes.func,
   /**
    * Override the inline-styles of the root element.

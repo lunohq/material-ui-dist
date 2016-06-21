@@ -46,10 +46,6 @@ var _SlideIn = require('../internal/SlideIn');
 
 var _SlideIn2 = _interopRequireDefault(_SlideIn);
 
-var _ClearFix = require('../internal/ClearFix');
-
-var _ClearFix2 = _interopRequireDefault(_ClearFix);
-
 var _dateUtils = require('./dateUtils');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -281,8 +277,7 @@ var Calendar = function (_Component) {
           fontSize: 12,
           fontWeight: 400,
           padding: '0px 8px',
-          transition: _transitions2.default.easeOut(),
-          width: isLandscape ? 294 : 'auto'
+          transition: _transitions2.default.easeOut()
         },
         yearContainer: {
           display: 'flex',
@@ -292,12 +287,6 @@ var Calendar = function (_Component) {
           marginTop: 10,
           overflow: 'hidden',
           width: 310
-        },
-        dateDisplay: {
-          width: isLandscape ? 125 : 270,
-          height: isLandscape ? 290 : 'auto',
-          float: isLandscape ? 'left' : 'none',
-          fontWeight: 'bolder'
         },
         weekTitle: {
           display: 'flex',
@@ -318,9 +307,6 @@ var Calendar = function (_Component) {
       };
 
       var weekTitleDayStyle = prepareStyles(styles.weekTitleDay);
-      var weekTitleStyle = prepareStyles(styles.weekTitle);
-      var calendarContainerStyle = prepareStyles(styles.calendarContainer);
-      var yearContainerStyle = prepareStyles(styles.yearContainer);
 
       var _props = this.props;
       var cancelLabel = _props.cancelLabel;
@@ -336,8 +322,8 @@ var Calendar = function (_Component) {
 
 
       return _react2.default.createElement(
-        _ClearFix2.default,
-        { style: styles.root },
+        'div',
+        { style: prepareStyles(styles.root) },
         _react2.default.createElement(_reactEventListener2.default, {
           target: 'window',
           onKeyDown: this.handleWindowKeyDown
@@ -355,10 +341,10 @@ var Calendar = function (_Component) {
         }),
         _react2.default.createElement(
           'div',
-          { style: styles.calendar },
+          { style: prepareStyles(styles.calendar) },
           this.state.displayMonthDay && _react2.default.createElement(
             'div',
-            { style: calendarContainerStyle },
+            { style: prepareStyles(styles.calendarContainer) },
             _react2.default.createElement(_CalendarToolbar2.default, {
               DateTimeFormat: DateTimeFormat,
               locale: locale,
@@ -369,7 +355,7 @@ var Calendar = function (_Component) {
             }),
             _react2.default.createElement(
               'div',
-              { style: weekTitleStyle },
+              { style: prepareStyles(styles.weekTitle) },
               daysArray.map(function (event, i) {
                 return _react2.default.createElement(
                   'span',
@@ -396,7 +382,7 @@ var Calendar = function (_Component) {
           ),
           !this.state.displayMonthDay && _react2.default.createElement(
             'div',
-            { style: yearContainerStyle },
+            { style: prepareStyles(styles.yearContainer) },
             this.yearSelector()
           ),
           okLabel && _react2.default.createElement(_CalendarActionButtons2.default, {

@@ -85,6 +85,13 @@ var FlatButton = function (_Component) {
   }
 
   _createClass(FlatButton, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (nextProps.disabled && this.state.hovered) {
+        this.setState({ hovered: false });
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _props = this.props;
@@ -260,23 +267,11 @@ FlatButton.propTypes = {
    * @param {boolean} isKeyboardFocused Indicates whether the element is focused.
    */
   onKeyboardFocus: _react.PropTypes.func,
-  /**
-   * Callback function fired when the mouse enters the element.
-   *
-   * @param {object} event `mouseenter` event targeting the element.
-   */
+  /** @ignore */
   onMouseEnter: _react.PropTypes.func,
-  /**
-   * Callback function fired when the mouse leaves the element.
-   *
-   * @param {object} event `mouseleave` event targeting the element.
-   */
+  /** @ignore */
   onMouseLeave: _react.PropTypes.func,
-  /**
-   * Callback function fired when the element is touched.
-   *
-   * @param {object} event `touchstart` event targeting the element.
-   */
+  /** @ignore */
   onTouchStart: _react.PropTypes.func,
   /**
    * If true, colors button according to

@@ -84,9 +84,9 @@ function getMuiTheme(muiTheme) {
     badge: {
       color: palette.alternateTextColor,
       textColor: palette.textColor,
-      primaryColor: palette.accent1Color,
+      primaryColor: palette.primary1Color,
       primaryTextColor: palette.alternateTextColor,
-      secondaryColor: palette.primary1Color,
+      secondaryColor: palette.accent1Color,
       secondaryTextColor: palette.alternateTextColor,
       fontWeight: _typography2.default.fontWeightMedium
     },

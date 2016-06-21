@@ -76,11 +76,12 @@ var SvgIcon = function (_Component) {
       var prepareStyles = _context$muiTheme.prepareStyles;
 
 
-      var offColor = color ? color : style && style.fill ? style.fill : baseTheme.palette.textColor;
+      var offColor = color ? color : 'currentColor';
       var onColor = hoverColor ? hoverColor : offColor;
 
       var mergedStyles = (0, _simpleAssign2.default)({
         display: 'inline-block',
+        color: baseTheme.palette.textColor,
         fill: this.state.hovered ? onColor : offColor,
         height: 24,
         width: 24,
@@ -120,13 +121,9 @@ SvgIcon.propTypes = {
    * This is the icon color when the mouse hovers over the icon.
    */
   hoverColor: _react.PropTypes.string,
-  /**
-   * Function called when mouse enters this element.
-   */
+  /** @ignore */
   onMouseEnter: _react.PropTypes.func,
-  /**
-   * Function called when mouse leaves this element.
-   */
+  /** @ignore */
   onMouseLeave: _react.PropTypes.func,
   /**
    * Override the inline-styles of the root element.
