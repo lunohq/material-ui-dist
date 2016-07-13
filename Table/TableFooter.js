@@ -79,9 +79,9 @@ var TableFooter = function (_Component) {
           style: (0, _simpleAssign2.default)({}, styles.cell, child.props.style)
         };
 
-        var newDescendants = void 0;
+        var newDescendants = _react2.default.Children.toArray(child.props.children);
         if (adjustForCheckbox) {
-          newDescendants = [_react2.default.createElement(_TableRowColumn2.default, { key: 'fpcb' + rowNumber, style: { width: 24 } })].concat(_toConsumableArray(_react2.default.Children.toArray(child.props.children)));
+          newDescendants = [_react2.default.createElement(_TableRowColumn2.default, { key: 'fpcb' + rowNumber, style: { width: 24 } })].concat(_toConsumableArray(newDescendants));
         }
 
         return _react2.default.cloneElement(child, newChildProps, newDescendants);
